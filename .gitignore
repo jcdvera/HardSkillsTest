@@ -1,0 +1,11 @@
+/target/
+*.jar
+**/*.jar
+**/*.avi
+*.java.orig
+*.class
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
