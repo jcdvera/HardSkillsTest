@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('Prepare WireMock') {
             steps {
-                echo "wiremock"
+                echo "preparing wiremock"
+                sh "src/main/resources/wiremockRunner.sh"
             }
         }
         stage('Run Automated Tests') {
