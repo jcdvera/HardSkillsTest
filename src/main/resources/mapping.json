@@ -1,0 +1,147 @@
+{
+    "mappings": [
+        {
+            "request": {
+                "method": "POST",
+                "urlPath": "/auth",
+                "basicAuth": {
+                    "username": "juan",
+                    "password": "ValidPass123"
+                }
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "jsonBody": {
+                    "access_token": "RVNUTyBFUyBVTiBUT0tFTiBERSBBQ0NFU08=",
+                    "expires_in": 3600,
+                    "token_type": "Bearer"
+                }
+            }
+        },
+        {
+            "request": {
+                "method": "POST",
+                "urlPath": "/auth",
+                "basicAuth": {
+                    "username": "juan",
+                    "password": "InvalidPass123"
+                }
+            },
+            "response": {
+                "status": 401,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "jsonBody": {
+                    "message": "Unauthorized"
+                } 
+            }
+        },
+        {
+            "request": {
+                "method": "GET",
+                "urlPath": "/account/1234/details",
+                "headers": {
+                    "Authorization": {
+                        "equalTo": "RVNUTyBFUyBVTiBUT0tFTiBERSBBQ0NFU08=",
+                        "caseInsensitive": true
+                    }
+                }
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "jsonBody": {
+                    "account": { 
+                        "type": "Ahorros",
+                        "accountID": 1234,
+                        "owner": "Juan Camilo D vera",
+                        "amount": 1000
+                    }
+                }
+            }
+        },
+        {
+            "request": {
+                "method": "GET",
+                "urlPath": "/account/1234/details",
+                "headers": {
+                    "Authorization": {
+                        "matches": "^((?!RVNUTyBFUyBVTiBUT0tFTiBERSBBQ0NFU08=).)*$"
+                    }
+                }
+            },
+            "response": {
+                "status": 401,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "jsonBody": {
+                    "message": "Unauthorized"
+                }
+            }
+        },
+        {
+            "request": {
+                "method": "POST",
+                "urlPath": "/account/1234/wiretransfer",
+                "headers": {
+                    "Authorization": {
+                        "equalTo": "RVNUTyBFUyBVTiBUT0tFTiBERSBBQ0NFU08=",
+                        "caseInsensitive": true
+                    },
+                    "Content-Type": {
+                        "equalTo": "application/json"
+                    }
+                },
+                "bodyPatterns": [
+                    {
+                        "matchesJsonPath" : "$.name"
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "jsonBody": {
+                    "message": "Transferencia realizada exitosamente"
+                }
+            }
+        },
+        {
+            "request": {
+                "method": "POST",
+                "urlPath": "/account/1234/wiretransfer",
+                "headers": {
+                    "Authorization": {
+                        "matches": "^((?!RVNUTyBFUyBVTiBUT0tFTiBERSBBQ0NFU08=).)*$"
+                    },
+                    "Content-Type": {
+                        "equalTo": "application/json"
+                    }
+                },
+                "bodyPatterns": [
+                    {
+                        "matchesJsonPath" : "$.name"
+                    }
+                ]
+            },
+            "response": {
+                "status": 401,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "jsonBody": {
+                    "message": "Unauthorized"
+                }
+            }
+        }
+    ]
+}
