@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '2'))
+    }
     stages {
         stage('Prepare WireMock') {
             steps {
